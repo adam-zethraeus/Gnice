@@ -1,12 +1,12 @@
 // Drive
 function getDriveConfigFolder() {
   let root = DriveApp.getRootFolder();
-  return findFolderImmediatelyInFolder(config.gnice_config_folder_name, root);
+  return findFolderImmediatelyInFolder(gn.config_folder_name, root);
 }
 
 function createDriveConfigFolder() {
   let root = DriveApp.getRootFolder();
-  return root.createFolder(config.gnice_config_folder_name);
+  return root.createFolder(gn.config_folder_name);
 }
 
 function createFoldersInFolder(new_folder_names, folder) {
