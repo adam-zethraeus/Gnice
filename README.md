@@ -21,6 +21,8 @@ Passable. Your emails are delayed by a minute because Google doesn't provide hoo
 
 Hilariously.
 
+You set up a filter which makes all email skip the inbox and adds a 'processing' filter. You set up the script at https://script.google.com.
+
 #### Reading
 Inbox & Gmail labels as inboxes:
 Important stuff (your Hey 'Imbox') into your inbox. Gmail labels as secondary inboxes.
