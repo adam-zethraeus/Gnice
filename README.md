@@ -21,20 +21,20 @@ Passable. Your emails are delayed by a minute because Google doesn't provide hoo
 
 Hilariously.
 
-### Reading
+#### Reading
 Inbox & Gmail labels as inboxes:
 Important stuff (your Hey 'Imbox') into your inbox. Gmail labels as secondary inboxes.
 'to_screen' for senders you've yet to categorize, your regular inbox for regular mail. 'paper_trail' and 'feed' for your receipts-and-whatnot and your subscriptions respectively.
 
-### Setting filters
+#### Setting filters
 Gmail labels as commands:
 Each of the inbox types has a '@-type' label which you assign to teach it to categorize the sender.
 
-### Backend
+#### Backend
 It uses your Google Drive as a key value store.
 It puts a file named with the sender's address in a folder to inform future filtering.
 
-### Updates
+#### Updates
 Google Apps Scripts can be run by triggers. There's no email trigger. It can run once per minute.
 
 > Uh. Should I try it?
