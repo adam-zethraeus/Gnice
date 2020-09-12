@@ -4,6 +4,9 @@ const gn = (() => {
     let match = email_extraction_regex.exec(from_string);
     return !!match ? match[1] : undefined;
   };
+  const normalizedFrom = (from_string) => {
+    return extractEmailFromFrom(from_string).toLowerCase().normalize();
+  }
   // Identity lists
   const config_folder_name = "gnice_config";
   const internal_labels = ["to_screen", "processing"];
@@ -24,5 +27,5 @@ const gn = (() => {
     .concat(internal_labels)
     .map(name => [name, label(name)]);
 
-  return { extractEmailFromFrom, id_label_pairs, actionId, inbox, processing, screen_destinations, internal_labels, config_folder_name }
+  return { normalizedFrom, id_label_pairs, actionId, inbox, processing, to_screen, screen_destinations, internal_labels, config_folder_name }
 })();
