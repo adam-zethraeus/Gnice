@@ -38,7 +38,7 @@ const main = (() => {
         }
       }
     }).filter((destination) => !!destination);
-    return !!destination ? destination : gn.to_screen;
+    return !destination ? destination : gn.to_screen;
   }
 
   function updateScreeningForDestinations(destinations) {
