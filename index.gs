@@ -88,7 +88,6 @@ const main = (() => {
     } else {
       let destination_label = label_map[destination];
       destination_label.addToThread(thread);
-      thread.markRead();
     }
   }
 
