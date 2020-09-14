@@ -33,12 +33,12 @@ const main = (() => {
       let files = folder.getFilesByName(from_val);
       while (files.hasNext()) {
         let curr = files.next();
-        if (curr.getName().valueOf() == from_val.valueOf()) {
+        if (curr.getName().valueOf() === from_val.valueOf()) {
           return id;
         }
       }
     }).filter((destination) => !!destination);
-    return !destination ? destination : gn.to_screen;
+    return destination.length > 0 ? destination[0] : gn.to_screen;
   }
 
   function updateScreeningForDestinations(destinations) {
