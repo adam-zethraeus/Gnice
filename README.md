@@ -106,6 +106,6 @@ Could this ramshackle set of scripts make me miss my emails?
 > 
 > Secondly, the filters are on email addresses in the 'From' field, and in theory you could absolutely filter based on an email's 'From' and later get an important on from the same 'From'.
 > 
-> Thirdly, look at the code. It's medicore. It could be mining bitcoin for all I know.
+> Thirdly, look at the code. It's mediocre. It could be mining bitcoin for all I know.
 
 
