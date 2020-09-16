@@ -1,21 +1,53 @@
-function getOrCreateHandles() {
-  let lable_names = gn.id_label_pairs;
-  let label_handles = getLabels(lable_names);
-  let labels_to_create = lable_names.map((name, index) => !label_handles[index][1] && name).filter(name => !!name);
-  let new_label_handles = createLabels(labels_to_create);
-  label_handles = label_handles.concat(new_label_handles);
-  
-  let gnice_folder = getDriveConfigFolder() || createDriveConfigFolder();
-  if (!gnice_folder) { throw "Gnice Drive config folder could not be set up." }
+const setupEnvironmentForConfiguration = (() => {
 
-  let folder_names = gn.screen_destinations;
-  let folder_handles = getFoldersInFolder(folder_names, gnice_folder);
-  let folders_to_create = folder_names.map((name, index) => !folder_handles[index][1] && name).filter(name => !!name);
-  let new_folders = createFoldersInFolder(folders_to_create, gnice_folder);
-  folder_handles = folder_handles.concat();
+  const getOrCreateLabelHandle = (conf, dest) => {
+    if (dest.type !== conf.LABEL) { throw `getOrCreateLabelHandle called with non-label: ${dest}` };
+    let label_name = conf.labelName(dest);
+    let handle = GmailApp.getUserLabelByName(label_name) || GmailApp.createLabel(label_name);
+    if (!handle) { throw `getOrCreateLabelHandle couldn't make or find label for destination: ${dest}`}
+    return handle;
+  }
 
-  return [
-    label_handles.reduce((acc, [name, handle]) => { acc[name] = handle; return acc }, {}),
-    folder_handles.reduce((acc, [name, handle]) => { acc[name] = handle; return acc }, {})
-   ];
-}
+  const findChildFolderByName = (child_name, parent) => {
+    let iterator = parent.getFoldersByName(child_name);
+    while (iterator.hasNext()) {
+      let curr = iterator.next();
+      let parent_iterator = curr.getParents();
+      while (parent_iterator.hasNext()) {
+        let parent = parent_iterator.next();
+        if (parent.getId() === parent.getId()) {
+          return curr;
+        }
+      }
+    }
+  }
+
+  const getOrCreateFolderHandle = (conf, root, dest) => {
+    if (dest.stage !== conf.DESTINATION) { throw `getOrCreateFolderHandle called with non-destination: ${dest}` };
+    let folder_name = conf.folderName(dest);
+    let handle = findChildFolderByName(folder_name, root) || root.createFolder(folder_name);
+    if (!handle) { throw `getOrCreateFolderHandle couldn't make or find folder for destination: ${dest}`}
+    return handle;
+  }
+
+  return (conf) => {
+    let root_folder = DriveApp.getRootFolder();
+    if (!root_folder) { throw `setup could not access root folder`}; 
+    let conf_folder = findChildFolderByName(conf.config_folder_name, root_folder) || root_folder.createFolder(conf.config_folder_name); 
+    if (!conf_folder) { throw `setup could not make or find config folder: ${conf.config_folder_name}`}; 
+    return conf.destination_keys.reduce((acc, key) => {
+      let dest = conf.destinations[key];
+      let label_handle = (dest.type === conf.LABEL) ? getOrCreateLabelHandle(conf, dest) : undefined;
+      let folder_handle = (dest.stage === conf.DESTINATION) ? getOrCreateFolderHandle(conf, conf_folder, dest) : undefined;
+      acc[key] = { type: dest.type, stage: dest.stage, folder: folder_handle, label: label_handle };
+      return acc; 
+    }, {})
+  }
+})();
+
+
+
+
+
+
+

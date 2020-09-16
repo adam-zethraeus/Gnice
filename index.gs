@@ -1,4 +1,25 @@
 const main = (() => {
+
+  const resetEditMarked = (env) => {
+    // could mark old matches as processing to allow a parse over even if timing out.
+  }
+  const parseProcessingInDestination = (env) => {
+    // should write the full 'From' fields to file if not present.
+  }
+  const parseProcessingInScreening = (env) => {
+    // must not remove processing label
+  }
+
+  return () => {
+    let env = setupEnvironmentForConfiguration(configuration);
+    resetEditMarked(env);
+    parseProcessingInDestination(env);
+    parseProcessingInScreening(env);
+  }
+})()
+
+
+const old_main = (() => {
   let label_map;
   let folder_map; 
 
